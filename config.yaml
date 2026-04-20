@@ -1,10 +1,19 @@
 app:
   name: IITM / Pravartak Capstone project - RAG
   collection_name: philosophy
+  data_dir: ./data
+  vector_store_dir: ./data/chroma_db
 
 models:
   embedding_model: qwen3-embedding:0.6b
   chat_model: qwen3.5:4b
+  ollama_base_url: http://localhost:11434
+
+ingestion:
+  chunk_size: 900
+  chunk_overlap: 200
+  batch_size: 48
+  top_k: 4
 
 catalog:
   documents:
