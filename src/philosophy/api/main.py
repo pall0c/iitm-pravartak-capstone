@@ -22,3 +22,7 @@ async def health() -> dict:
         "embedding_model": snapshot.embedding_model,
         "chat_model": snapshot.chat_model,
     }
+
+@app.get("/api/authors")
+async def authors() -> list[dict[str, str]]:
+    return service.authors()

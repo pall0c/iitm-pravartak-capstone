@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from .config import Configuration
+from .catalog import PhilosophyCatalog
 
 @dataclass(frozen=True)
 class HealthSnapshot:
@@ -13,6 +14,7 @@ class HealthSnapshot:
 class PhilosophyService:
     def __init__(self, configuration: Configuration) -> None:
         self.configuration = configuration
+        self.catalog: PhilosophyCatalog = configuration.catalog
 
     def health(self) -> HealthSnapshot:
         return HealthSnapshot(
@@ -22,3 +24,6 @@ class PhilosophyService:
             embedding_model=self.configuration.models.embedding_model,
             chat_model=self.configuration.models.chat_model,
         )
+
+    def authors(self) -> list[dict[str, str]]:
+        return self.catalog.author_options()

@@ -5,3 +5,20 @@ app:
 models:
   embedding_model: qwen3-embedding:0.6b
   chat_model: qwen3.5:4b
+
+catalog:
+  documents:
+    - path: data/plato_republic.pdf
+      key: plato
+      author: Plato
+      work: Republic
+
+    - path: data/seneca_shortness_of_life.pdf
+      key: seneca
+      author: Seneca
+      work: On the Shortness of Life
+
+    - path: data/aurelius_meditations.pdf
+      key: aurelius
+      author: Marcus Aurelius
+      work: Meditations
