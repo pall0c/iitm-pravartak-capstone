@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from philosophy.config import Configuration
+from .config import Configuration
 
 @dataclass(frozen=True)
 class HealthSnapshot:
