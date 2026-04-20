@@ -1,0 +1,7 @@
+app:
+  name: IITM / Pravartak Capstone project - RAG
+  collection_name: philosophy
+
+models:
+  embedding_model: qwen3-embedding:0.6b
+  chat_model: qwen3.5:4b
