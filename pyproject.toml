@@ -16,4 +16,4 @@ dependencies = [
 ]
 
 [tool.fastapi]
-entrypoint = "src.philosophy.api.main:app"
+entrypoint = "src.api.main:app"

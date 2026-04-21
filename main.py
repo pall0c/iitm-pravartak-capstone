@@ -4,8 +4,8 @@ import argparse
 import json
 from dataclasses import asdict
 
-from src.philosophy.config import load_configuration
-from src.philosophy.service import PhilosophyService
+from src.config import load_configuration
+from src.service import PhilosophyService
 
 
 def main() -> None:
