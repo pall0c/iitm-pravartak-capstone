@@ -36,9 +36,8 @@ class RetrievalPipeline:
         top_k: Optional[int] = None,
     ) -> list[Document]:
         filter_payload = {"author_key": author_key} if author_key else None
-        target_k = top_k or self.configuration.ingestion.top_k
         return self.vector_store.similarity_search(
             query,
-            k=max(target_k * 5, target_k),
+            k=top_k or self.configuration.ingestion.top_k,
             filter=filter_payload,
         )

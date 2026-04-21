@@ -71,7 +71,10 @@ class GenerationPipeline:
             context=self.format_context(documents),
         )
         response = await self.llm.ainvoke(messages)
-        return _content_to_text(response.content).strip()
+        answer = _content_to_text(response.content).strip()
+        if answer:
+            return answer
+        return "The indexed texts do not provide enough clear evidence to answer that question."
 
     async def stream(self, question: str, documents: list[Document]):
         messages = self.prompt.format_messages(

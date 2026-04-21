@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from typing import AsyncGenerator, Iterable, Optional
 
 from langchain_core.documents import Document
@@ -11,6 +11,7 @@ from .config import Configuration
 from .pipelines.embedding import EmbeddingPipeline, IngestionReport
 from .pipelines.generation import GenerationPipeline
 from .pipelines.retrieval import RetrievalPipeline
+from .schemas import QueryResponse, SourceHit
 
 
 @dataclass(frozen=True)
@@ -20,22 +21,6 @@ class HealthSnapshot:
     collection_name: str
     embedding_model: str
     chat_model: str
-
-
-@dataclass(frozen=True)
-class SourceHit:
-    author: str
-    author_key: str
-    work: str
-    source_file: str
-    page: int
-    excerpt: str
-
-
-@dataclass(frozen=True)
-class QueryResponse:
-    answer: str
-    sources: list[SourceHit]
 
 
 class QueryRejectedError(ValueError):
@@ -144,7 +129,7 @@ class PhilosophyService:
         top_k: Optional[int] = None,
     ) -> AsyncGenerator[str, None]:
         documents = self._retrieve_documents(question, author_key, top_k)
-        sources = [asdict(source) for source in self._source_hits(documents)]
+        sources = [source.model_dump() for source in self._source_hits(documents)]
 
         async def event_stream() -> AsyncGenerator[str, None]:
             yield json.dumps({"type": "context", "sources": sources}) + "\n"

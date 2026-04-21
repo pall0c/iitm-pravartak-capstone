@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
@@ -33,6 +34,31 @@ class EmbeddingPipeline:
             chunk_size=configuration.ingestion.chunk_size,
             chunk_overlap=configuration.ingestion.chunk_overlap,
         )
+
+    @staticmethod
+    def _normalize_text(text: str) -> str:
+        return re.sub(r"\s+", " ", text).strip()
+
+    @classmethod
+    def _is_low_quality_chunk(cls, text: str) -> bool:
+        normalized = cls._normalize_text(text)
+        if len(normalized) < 80:
+            return True
+
+        alnum_count = sum(character.isalnum() for character in normalized)
+        alpha_count = sum(character.isalpha() for character in normalized)
+        if alnum_count == 0 or alpha_count < 40:
+            return True
+
+        alpha_ratio = alpha_count / len(normalized)
+        if alpha_ratio < 0.55:
+            return True
+
+        tokens = re.findall(r"[A-Za-z]{2,}", normalized)
+        if len(tokens) < 12:
+            return True
+
+        return False
 
     def discover_pdfs(self) -> list[Path]:
         return sorted(self.configuration.app.data_dir.rglob("*.pdf"))
@@ -69,7 +95,14 @@ class EmbeddingPipeline:
         return documents
 
     def chunk_documents(self, documents: list[Document]) -> list[Document]:
-        chunks = self.splitter.split_documents(documents)
+        raw_chunks = self.splitter.split_documents(documents)
+        chunks: list[Document] = []
+        for chunk in raw_chunks:
+            chunk.page_content = self._normalize_text(chunk.page_content)
+            if self._is_low_quality_chunk(chunk.page_content):
+                continue
+            chunks.append(chunk)
+
         for index, chunk in enumerate(chunks):
             chunk.metadata["chunk_index"] = index
             chunk.metadata["chunk_id"] = (
