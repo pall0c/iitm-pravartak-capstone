@@ -39,7 +39,7 @@ ollama serve
 ├── config.yaml                # Runtime configuration: app, models, ingestion, catalog
 ├── data/                      # Source PDFs and generated Chroma vector store
 ├── main.py                    # CLI entrypoint for ingestion
-├── src/philosophy/
+├── src/
 │   ├── api/                   # FastAPI app and routes
 │   ├── pipelines/             # Embedding, retrieval, and generation pipelines
 │   ├── catalog.py             # Document catalog and author metadata helpers
