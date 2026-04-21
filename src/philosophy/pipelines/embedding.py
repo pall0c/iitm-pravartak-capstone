@@ -12,12 +12,14 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from ..config import Configuration
 
+
 @dataclass(frozen=True)
 class IngestionReport:
     pdf_count: int
     page_count: int
     chunk_count: int
     persist_directory: str
+
 
 class EmbeddingPipeline:
     def __init__(self, configuration: Configuration) -> None:
@@ -55,7 +57,9 @@ class EmbeddingPipeline:
                 "source_path": str(pdf_path),
                 "page": page_number,
             }
-            enriched.append(Document(page_content=page_document.page_content, metadata=metadata))
+            enriched.append(
+                Document(page_content=page_document.page_content, metadata=metadata)
+            )
         return enriched
 
     def load_documents(self) -> list[Document]:

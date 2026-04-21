@@ -1,9 +1,10 @@
-import yaml
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
-from .catalog import PhilosophyCatalog, CatalogEntry
+import yaml
+
+from .catalog import CatalogEntry, PhilosophyCatalog
+
 
 @dataclass(frozen=True)
 class AppConfig:
@@ -12,11 +13,13 @@ class AppConfig:
     data_dir: Path
     vector_store_dir: Path
 
+
 @dataclass(frozen=True)
 class ModelConfig:
     embedding_model: str
     chat_model: str
     ollama_base_url: str
+
 
 @dataclass(frozen=True)
 class IngestionConfig:
@@ -25,6 +28,7 @@ class IngestionConfig:
     batch_size: int
     top_k: int
 
+
 @dataclass(frozen=True)
 class Configuration:
     app: AppConfig
@@ -32,12 +36,14 @@ class Configuration:
     ingestion: IngestionConfig
     catalog: PhilosophyCatalog
 
+
 def _load_yaml(config_path: Path) -> dict:
     with config_path.open("r", encoding="utf-8") as handle:
         return yaml.safe_load(handle) or {}
 
+
 def load_configuration() -> Configuration:
-    payload = _load_yaml(Path('./config.yaml'))
+    payload = _load_yaml(Path("./config.yaml"))
     app_payload = payload["app"]
     model_payload = payload["models"]
     catalog_payload = payload["catalog"]["documents"]
@@ -47,7 +53,7 @@ def load_configuration() -> Configuration:
         name=app_payload["name"],
         collection_name=app_payload["collection_name"],
         data_dir=Path(app_payload["data_dir"]).resolve(),
-        vector_store_dir=Path(app_payload["vector_store_dir"]).resolve()
+        vector_store_dir=Path(app_payload["vector_store_dir"]).resolve(),
     )
     models = ModelConfig(
         embedding_model=model_payload["embedding_model"],
@@ -58,14 +64,14 @@ def load_configuration() -> Configuration:
         chunk_size=int(ingestion_payload["chunk_size"]),
         chunk_overlap=int(ingestion_payload["chunk_overlap"]),
         batch_size=int(ingestion_payload["batch_size"]),
-        top_k=int(ingestion_payload["top_k"])
+        top_k=int(ingestion_payload["top_k"]),
     )
     catalog = PhilosophyCatalog(
         CatalogEntry(
             key=entry["key"],
             author=entry["author"],
             work=entry["work"],
-            path=Path(entry["path"]).resolve()
+            path=Path(entry["path"]).resolve(),
         )
         for entry in catalog_payload
     )

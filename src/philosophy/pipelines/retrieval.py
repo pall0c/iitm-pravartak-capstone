@@ -8,6 +8,7 @@ from langchain_ollama import OllamaEmbeddings
 
 from ..config import Configuration
 
+
 class RetrievalPipeline:
     def __init__(self, configuration: Configuration) -> None:
         self.configuration = configuration

@@ -8,9 +8,11 @@ service = PhilosophyService(config)
 
 app = FastAPI(title=config.app.name, version="0.1.0")
 
+
 @app.get("/api")
 async def root():
     return {"Hello": "Philosophy API!"}
+
 
 @app.get("/api/health")
 async def health() -> dict:
@@ -22,6 +24,7 @@ async def health() -> dict:
         "embedding_model": snapshot.embedding_model,
         "chat_model": snapshot.chat_model,
     }
+
 
 @app.get("/api/authors")
 async def authors() -> list[dict[str, str]]:

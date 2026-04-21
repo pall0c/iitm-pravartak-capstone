@@ -4,12 +4,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Optional, Union
 
+
 @dataclass(frozen=True)
 class CatalogEntry:
     path: Path
     key: str
     author: str
     work: str
+
 
 class PhilosophyCatalog:
     def __init__(self, entries: Iterable[CatalogEntry]) -> None:

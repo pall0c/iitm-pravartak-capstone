@@ -10,7 +10,9 @@ from src.philosophy.service import PhilosophyService
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Ingest philosophy PDFs into Chroma.")
-    parser.add_argument("--reset", action="store_true", help="Delete the persisted Chroma store first.")
+    parser.add_argument(
+        "--reset", action="store_true", help="Delete the persisted Chroma store first."
+    )
     args = parser.parse_args()
 
     service = PhilosophyService(load_configuration())
