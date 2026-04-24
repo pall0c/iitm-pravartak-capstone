@@ -139,14 +139,14 @@ export default function Home() {
                     ) : null}
                   </div>
 
-                  <p className="mt-3 whitespace-pre-wrap break-words text-[15px] leading-7 [overflow-wrap:anywhere] sm:text-[17px]">
+                  <p className="mt-3 whitespace-pre-wrap wrap-anywhere text-[15px] leading-7 sm:text-[17px]">
                     {message.content}
                   </p>
 
                   {message.sources?.length ? (
                     <div className="mt-6 min-w-0 border-t border-white/40 pt-4">
                       <div className="flex items-center justify-between gap-3">
-                        <h2 className="font-[family:var(--font-space-grotesk)] text-sm uppercase tracking-[0.18em] text-[#857d92]">
+                        <h2 className="font-(--font-space-grotesk) text-sm uppercase tracking-[0.18em] text-[#857d92]">
                           Sources
                         </h2>
                         <span className="text-[11px] uppercase tracking-[0.2em] text-[#9a91a7]">
@@ -161,18 +161,18 @@ export default function Home() {
                             className="min-w-0 border-l-2 border-[#cdbde8] pl-4"
                           >
                             <div className="flex min-w-0 flex-col gap-1 text-sm text-[#70697d] sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                              <p className="min-w-0 break-words font-medium text-[#50495b] [overflow-wrap:anywhere]">
+                              <p className="min-w-0 wrap-anywhere font-medium text-[#50495b]">
                                 {source.author}{" "}
                                 <span className="text-[#8b7869]">in</span>{" "}
                                 {source.work}
                               </p>
-                              <p className="min-w-0 break-words [overflow-wrap:anywhere]">
+                              <p className="min-w-0 wrap-anywhere">
                                 {source.source_file}{" "}
                                 <span className="text-[#b89a84]">•</span> page{" "}
                                 {source.page}
                               </p>
                             </div>
-                            <p className="mt-2 whitespace-pre-wrap break-all text-sm leading-6 text-[#5b5466] [overflow-wrap:anywhere]">
+                            <p className="mt-2 whitespace-pre-wrap break-all wrap-anywhere text-sm leading-6 text-[#5b5466]">
                               {formatExcerpt(source.excerpt)}
                             </p>
                           </section>
@@ -236,9 +236,9 @@ export default function Home() {
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           className="lucide lucide-chevron-down-icon lucide-chevron-down"
                         >
                           <path d="m6 9 6 6 6-6" />
