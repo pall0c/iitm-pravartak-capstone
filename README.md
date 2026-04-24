@@ -90,7 +90,7 @@ The backend serves on `http://127.0.0.1:8000` by default.
 
 Useful endpoints:
 
-1. `GET /api/health`
+1. `GET /api/v1/health`
 1. `GET /api/v1/authors`
 1. `POST /api/v1/query`
 1. `POST /api/v1/query/stream`
