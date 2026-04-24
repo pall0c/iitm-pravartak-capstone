@@ -28,8 +28,8 @@ async def root():
     return {"Hello": "Philosophy API!"}
 
 
-@app.get("/api/health")
-async def health() -> dict:
+@app.get("/api/v1/health")
+async def health_v1() -> dict:
     snapshot = service.health()
     return {
         "status": snapshot.status,
@@ -37,22 +37,6 @@ async def health() -> dict:
         "collection_name": snapshot.collection_name,
         "embedding_model": snapshot.embedding_model,
         "chat_model": snapshot.chat_model,
-    }
-
-
-@app.get("/api/authors")
-async def authors() -> list[dict[str, str]]:
-    return service.authors()
-
-
-@app.get("/api/v1/health")
-async def health_v1() -> dict:
-    snapshot = service.health()
-    return {
-        "status": snapshot.status,
-        "embedding_model": snapshot.embedding_model,
-        "chat_model": snapshot.chat_model,
-        "collection_name": snapshot.collection_name,
     }
 
 
