@@ -1,10 +1,15 @@
 import axios from "axios";
 
-import type { AuthorOption, QueryRequest, QueryResponse } from "@/lib/api-types";
+import type {
+  AuthorOption,
+  QueryRequest,
+  QueryResponse,
+} from "@/lib/api-types";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: "http://localhost:8000",
   headers: {
+    Accept: "application/json",
     "Content-Type": "application/json",
   },
 });
@@ -17,7 +22,12 @@ export const fetchAuthors = async (): Promise<AuthorOption[]> => {
 export const submitQuery = async (
   payload: QueryRequest,
 ): Promise<QueryResponse> => {
-  const response = await api.post<QueryResponse>("/api/v1/query", payload);
+  const response = await api.post<QueryResponse>("/api/v1/query", payload, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
   return response.data;
 };
 

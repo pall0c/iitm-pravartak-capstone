@@ -20,5 +20,5 @@ export type QueryResponse = {
 
 export type QueryRequest = {
   question: string;
-  author_key: string | null;
+  author_key?: string;
 };

@@ -67,7 +67,7 @@ export default function Home() {
     try {
       const response: QueryResponse = await submitQuery({
         question: trimmedQuestion,
-        author_key: selectedAuthor || null,
+        ...(selectedAuthor ? { author_key: selectedAuthor } : {}),
       });
 
       setMessages((current) => [
